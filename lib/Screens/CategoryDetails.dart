@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:ui_level_up/Models/MealClass.dart'; // Ensure Meal class is correctly imported
+import 'package:ui_level_up/Models/MealClass.dart';
+import 'package:ui_level_up/Screens/MealRecipie.dart'; // Ensure Meal class is correctly imported
 
 class CategoryDetails extends StatefulWidget {
   final String categoryName;
@@ -76,47 +77,58 @@ class _CategoryDetailsState extends State<CategoryDetails>
               padding: EdgeInsets.only(top: 10),
               itemCount: meals!.length,
               itemBuilder: (context, index) {
-                return AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _animation.value,
-                      child: Card(
-                        elevation: 5,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10),
-                              ),
-                              child: Image.network(
-                                meals![index].strMealThumb,
-                                fit: BoxFit.cover,
-                                height: 250,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                meals![index].strMeal,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) =>
+                            MealRecipie(id: meals![index].idMeal),
                       ),
                     );
                   },
+                  child: AnimatedBuilder(
+                    animation: _animationController,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: _animation.value,
+                        child: Card(
+                          elevation: 5,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
+                                ),
+                                child: Image.network(
+                                  meals![index].strMealThumb,
+                                  fit: BoxFit.cover,
+                                  height: 250,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  meals![index].strMeal,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             )
