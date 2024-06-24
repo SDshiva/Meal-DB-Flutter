@@ -43,22 +43,72 @@ class _DashboardsState extends State<Dashboards> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: Text("Meal DB"),
-          backgroundColor: Color.fromARGB(202, 74, 127, 170),
+          title: Text(
+            "Smart Recipe Book",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              letterSpacing: 2,
+            ),
+          ),
         ),
+        // endDrawer: Drawer(
+        //   elevation: 5,
+        //   child: ListView(
+        //     padding: EdgeInsets.zero,
+        //     children: <Widget>[
+        //       Container(
+        //         height: 100, // Adjust the height to reduce the size
+        //         child: DrawerHeader(
+        //           padding: EdgeInsets.only(left: 10),
+        //           decoration: BoxDecoration(
+        //             color: Colors.white,
+        //           ),
+        //           child: Align(
+        //             alignment: Alignment.centerLeft,
+        //             child: Text(
+        //               "Menu",
+        //               style: TextStyle(
+        //                 color: Colors.black,
+        //                 fontSize: 24,
+        //               ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.home),
+        //         title: Text('Home'),
+        //         onTap: () {
+        //           // Handle navigation to home
+        //           Navigator.pop(context); // close the drawer
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.settings),
+        //         title: Text('Settings'),
+        //         onTap: () {
+        //           // Handle navigation to settings
+        //           Navigator.pop(context); // close the drawer
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.contact_mail),
+        //         title: Text('Contact'),
+        //         onTap: () {
+        //           // Handle navigation to contact
+        //           Navigator.pop(context); // close the drawer
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: items != null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Choose Category"),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Expanded(
                     child: ListView.builder(
+                      padding: EdgeInsets.only(top: 10),
                       shrinkWrap: true,
                       itemCount: items!.items.length,
                       itemBuilder: (context, index) {

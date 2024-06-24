@@ -29,10 +29,9 @@ class _CategoryDetailsState extends State<CategoryDetails>
     );
 
     _animation = CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-        reverseCurve: Curves.bounceOut // Adjust curve as needed
-        );
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
 
     fetchCategoryDetails(); // Initiate data fetching and animation
   }
@@ -58,8 +57,6 @@ class _CategoryDetailsState extends State<CategoryDetails>
       });
 
       _animationController.forward();
-      // _animationController.reverse();
-      // period: Duration(seconds: 2), reverse: true); // Start the animation
     } else {
       throw Exception('Failed to load meals');
     }
@@ -69,68 +66,88 @@ class _CategoryDetailsState extends State<CategoryDetails>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.categoryName),
-        backgroundColor: Color.fromARGB(202, 74, 127, 170),
+        title: Text(
+          widget.categoryName,
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            letterSpacing: 2,
+          ),
+        ),
       ),
       body: meals != null
-          ? ListView.builder(
-              padding: EdgeInsets.only(top: 10),
-              itemCount: meals!.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (builder) =>
-                            MealRecipie(id: meals![index].idMeal),
-                      ),
-                    );
-                  },
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _animation.value,
-                        child: Card(
-                          elevation: 5,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(10),
-                                ),
-                                child: Image.network(
-                                  meals![index].strMealThumb,
-                                  fit: BoxFit.cover,
-                                  height: 250,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  meals![index].strMeal,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
+          ? Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.white, Colors.blue[50]!],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: 10),
+                itemCount: meals!.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) =>
+                              MealRecipie(id: meals![index].idMeal),
                         ),
                       );
                     },
-                  ),
-                );
-              },
+                    child: AnimatedBuilder(
+                      animation: _animationController,
+                      builder: (context, child) {
+                        return FadeTransition(
+                          opacity: _animation,
+                          child: Transform.scale(
+                            scale: _animation.value,
+                            child: Card(
+                              elevation: 10,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(15),
+                                    ),
+                                    child: Image.network(
+                                      meals![index].strMealThumb,
+                                      fit: BoxFit.cover,
+                                      height: 200,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      meals![index].strMeal,
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             )
           : Center(
               child: CircularProgressIndicator(),
